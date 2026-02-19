@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoute.js';
+import uploadRoutes from './routes/uploadRoute.js';
+import profileRoutes from './routes/profileRoute.js';
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ connectDB();
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.send('Game Match API is Ready! 🚀');

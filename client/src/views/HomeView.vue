@@ -5,7 +5,7 @@
       
       <div class="p-4 flex items-center">
         <button class="text-xl mr-4">←</button>
-        <h1 class="text-2xl font-bold">Rattatuay 21</h1>
+        <h1 class="text-2xl font-bold">{{ profile?.name }} {{ profile?.age || '' }}</h1>
       </div>
 
       <div class="flex-1 px-4 relative">
@@ -17,7 +17,7 @@
       <div class="p-4 flex flex-col gap-3">
         <div class="bg-gray-800 p-4 rounded-xl">
           <h2 class="text-sm text-gray-400 mb-1">About Me</h2>
-          <p class="text-sm">เล่นชิวๆ ไม่ซีเรียส ปกติเล่น 21.00 - 24.00</p>
+          <p class="text-sm">{{ profile?.bio || 'ยังไม่มีคำอธิบายตัวเอง' }}</p>
         </div>
 
         <div class="bg-gray-800 p-4 rounded-xl">
@@ -44,5 +44,31 @@
 </template>
 
 <script setup lang="ts">
-// รอใส่ Logic การ Swipe ตรงนี้
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import api from '../api';
+
+const router = useRouter();
+const profile = ref<any>(null);
+const isLoading = ref(true);
+
+onMounted(async () => {
+  try {
+    // ดึงข้อมูล Profile ของคนที่ Login อยู่
+    const response = await api.get('/profile');
+    profile.value = response.data;
+  } catch (error) {
+    console.error('Failed to fetch profile', error);
+    // ถ้า Token หมดอายุ หรือไม่มี ให้เด้งกลับไป Login
+    localStorage.removeItem('token');
+    router.push('/');
+  } finally {
+    isLoading.value = false;
+  }
+});
+
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  router.push('/');
+};
 </script>

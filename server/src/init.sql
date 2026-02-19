@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS profiles (
     bio TEXT,
     country VARCHAR(50),
     age INT,
-    profile_image_url VARCHAR(255),
+    profile_images TEXT[] DEFAULT '{}', -- เก็บ URL ของรูปได้หลายอันเป็น Array
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -74,10 +74,10 @@ CREATE TABLE IF NOT EXISTS admin_logs (
 -- ==========================================
 -- Insert Mock Data (ข้อมูลตั้งต้นให้เทสได้เลย)
 -- ==========================================
--- INSERT INTO games (game_name, game_icon_url) VALUES 
--- ('ROV', 'https://example.com/rov.png'),
--- ('Valorant', 'https://example.com/valorant.png'),
--- ('Genshin Impact', 'https://example.com/genshin.png');
+ INSERT INTO games (game_name, game_icon_url) VALUES 
+ ('ROV', 'https://example.com/rov.png'),
+ ('Valorant', 'https://example.com/valorant.png'),
+ ('Genshin Impact', 'https://example.com/genshin.png');
 
 -- สร้าง Admin User (รหัสผ่านคือ password123 ที่ผ่านการ hash แล้ว)
 -- ใส่ไว้เพื่อให้เพื่อนที่ทำหน้า Admin มีไอดีเข้าใช้งานได้เลย
