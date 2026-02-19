@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ปรับให้ UI ดูเป็นแอปมือถือ*/
+body {
+  @apply bg-gray-100 text-gray-800 antialiased;
+}

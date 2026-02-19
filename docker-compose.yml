@@ -1,0 +1,48 @@
+services:
+  # 1. Database Service (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: game-match-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: gamematch_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./server/src/init.sql:/docker-entrypoint-initdb.d/init.sql 
+
+  # 2. Backend Service (Node.js)
+  server:
+    build: ./server
+    container_name: game-match-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgres://postgres:password123@db:5432/gamematch_db
+      - PORT=3000
+    command: npm run dev
+    depends_on:
+      - db
+
+  # 3. Frontend Service (Vue.js)
+  client:
+    build: ./client
+    container_name: game-match-client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3000/api
+    depends_on:
+      - server
+
+volumes:
+  pgdata:
