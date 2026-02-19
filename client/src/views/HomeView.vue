@@ -10,7 +10,7 @@
 
       <div class="flex-1 px-4 relative">
         <div class="bg-gray-700 w-full h-80 rounded-2xl flex items-center justify-center">
-          <span class="text-gray-400">[รูปโปรไฟล์นกกระจอกเทศ]</span>
+          <span class="text-gray-400">[รูปโปรไฟล์ ยังไม่ดึงมากจาก DB]</span>
         </div>
       </div>
 
@@ -23,19 +23,19 @@
         <div class="bg-gray-800 p-4 rounded-xl">
           <h2 class="text-sm text-gray-400 mb-2">เกมที่เล่น</h2>
           <div class="flex flex-wrap gap-2">
-            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">Arena of Valor</span>
-            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">Free Fire</span>
-            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">League Of Legends</span>
+            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">Arena of Valor (MOCKDATA) </span>
+            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">Free Fire(MOCKDATA) </span>
+            <span class="bg-gray-600 px-3 py-1 rounded-full text-xs">League Of Legends(MOCKDATA) </span>
           </div>
         </div>
       </div>
 
       <div class="p-4 flex flex-col gap-2 mt-auto pb-8">
         <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl border border-gray-600">
-          ยกเลิกการแมทช์ (Skip)
+          ข้าม
         </button>
         <button class="bg-red-900 hover:bg-red-800 text-red-300 font-bold py-3 rounded-xl border border-red-700">
-          บล็อค Rattatuay
+          บล็อค Rattatuay (MOCKDATA)
         </button>
       </div>
 

@@ -17,7 +17,7 @@
         
         <div class="flex flex-col gap-4">
           <div>
-            <label class="block text-sm font-semibold mb-1">ชื่อในเกม (Display Name)</label>
+            <label class="block text-sm font-semibold mb-1">ชื่อเล่น</label>
             <input v-model="form.name" type="text" placeholder="เช่น เทพซ่า007" class="w-full border rounded-xl p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
           <div>
@@ -41,7 +41,7 @@
             <input v-model="form.age" type="number" placeholder="เช่น 20" class="w-full border rounded-xl p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
           <div>
-            <label class="block text-sm font-semibold mb-1">ประเทศ/จังหวัด</label>
+            <label class="block text-sm font-semibold mb-1">สถานที่ของคุณ</label>
             <input v-model="form.country" type="text" placeholder="เช่น ขอนแก่น, ไทย" class="w-full border rounded-xl p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
         </div>
@@ -71,7 +71,7 @@
         <p class="text-gray-500 text-sm mb-6">เขียนอะไรเจ๋งๆ ดึงดูดเพื่อนร่วมทีมหน่อย!</p>
         
         <textarea v-model="form.bio" rows="5" 
-                  placeholder="เช่น เล่นชิวๆ ไม่หัวร้อน ปกติออนช่วงดึก ทักมาได้เลยยยย" 
+                  placeholder="เช่น เล่นชิวๆ ไม่หัวร้อน" 
                   class="w-full border rounded-xl p-3 bg-gray-50 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
 
