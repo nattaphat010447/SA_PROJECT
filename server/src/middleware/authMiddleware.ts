@@ -17,3 +17,12 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
     next();
   });
 };
+
+export const authorizeAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
+  // ต้องผ่าน authenticateToken มาก่อนถึงจะมี req.user
+  if (req.user && req.user.isAdmin) {
+    next(); // ให้ผ่านไปทำคำสั่งต่อไปได้
+  } else {
+    res.status(403).json({ message: 'Access denied: Admin only' }); // ไม่ใช่แอดมิน เตะออก!
+  }
+};

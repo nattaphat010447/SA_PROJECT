@@ -92,3 +92,74 @@ export const updateMyGames = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: 'Error adding game' });
   }
 };
+
+// 5. ลบเกมที่เคยเลือกออกจากโปรไฟล์ (DELETE /api/profile/games/:gameId)
+export const removeMyGame = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    const { gameId } = req.params;
+
+    // ดัก Error ถ้า gameId ไม่ใช่ตัวเลข
+    if (isNaN(Number(gameId))) {
+      return res.status(400).json({ message: 'Invalid game ID' });
+    }
+
+    // ลบข้อมูลการเชื่อมโยงเกมกับผู้ใช้
+    const result = await pool.query(
+      'DELETE FROM user_game_interests WHERE user_id = $1 AND game_id = $2 RETURNING *',
+      [userId, gameId]
+    );
+
+    // ถ้าไม่มีให้ลบ แสดงว่าไม่มีเกมนี้ในโปรไฟล์อยู่แล้ว
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Game not found in your profile' });
+    }
+
+    res.json({ message: 'Game removed successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// 6. ดึงข้อมูลโปรไฟล์ของคนอื่น (GET /api/profile/:userId)
+export const getUserProfile = async (req: AuthRequest, res: Response) => {
+  try {
+    const targetUserId = req.params.userId;
+
+    if (isNaN(Number(targetUserId))) {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
+    // ดึงเฉพาะข้อมูลโปรไฟล์สาธารณะ (ไม่ดึง Email, Password, is_admin ออกมา)
+    const userResult = await pool.query(`
+      SELECT u.id as user_id, u.name,
+             p.display_name, p.bio, p.country, p.age, p.profile_images
+      FROM users u
+      LEFT JOIN profiles p ON u.id = p.user_id
+      WHERE u.id = $1
+    `, [targetUserId]);
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // ดึงเกมที่คนๆ นี้เล่น
+    const gamesResult = await pool.query(`
+      SELECT g.id as game_id, g.game_name, g.game_icon_url
+      FROM user_game_interests ugi
+      JOIN games g ON ugi.game_id = g.id
+      WHERE ugi.user_id = $1
+    `, [targetUserId]);
+
+    // ส่งกลับแบบรวมร่างกัน
+    res.json({
+      ...userResult.rows[0],
+      games: gamesResult.rows
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
