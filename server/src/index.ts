@@ -15,7 +15,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
 connectDB();
 
@@ -55,6 +55,8 @@ app.use('/api/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.send('Game Match API is Ready!');
 });
+
+// Removed temporary wipe endpoint
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
