@@ -8,7 +8,6 @@ const router = useRouter()
 const route = useRoute()
 const chatStore = useChatStore()
 
-// Hide navbar on login, register (all steps), setup
 const hideNavbar = computed(() => {
   return ['/login', '/setup-profile'].includes(route.path) || route.path.startsWith('/register') || route.path === '/'
 })
@@ -33,15 +32,16 @@ const hideNavbar = computed(() => {
       >
         <HomeIcon class="h-7 w-7" />
       </button>
+      
       <button 
         @click="router.push('/matches')"
         class="transition-colors hover:text-white relative"
         :class="{ 'text-purple-400': route.path.startsWith('/matches') || route.path.startsWith('/chat') }"
       >
         <ChatBubbleLeftIcon class="h-7 w-7" />
-        <!-- Notification badge would theoretically hook to a chat store here -->
         <span v-if="chatStore.hasUnread" class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-[var(--color-dark-bg)]"></span>
       </button>
+
       <button 
         @click="router.push('/profile')"
         class="transition-colors hover:text-white"

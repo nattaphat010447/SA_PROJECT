@@ -47,14 +47,17 @@ export const useSwipeStore = defineStore('swipe', {
                 this.loading = false
             }
         },
+        // แก้ไขฟังก์ชันนี้ใน src/stores/swipe.ts
         async registerSwipe(targetId: number, action: 'LIKE' | 'SKIP') {
             console.log(`[SWIPE START] Sending swipe action for targetId: ${targetId}, status: ${action}`)
+            
+            const targetProfile = this.profiles.find(p => p.id === targetId);
+
             try {
                 const res = await api.post('/swipe', { targetId, status: action })
                 console.log(`[SWIPE SUCCESS] Result from backend:`, res.data)
                 
                 if (res.data.isMatch) {
-                    const targetProfile = this.profiles.find(p => p.id === targetId);
                     this.matchTriggered = {
                         userId: targetId,
                         matchId: res.data.matchId,
