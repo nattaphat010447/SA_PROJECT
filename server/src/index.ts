@@ -35,6 +35,10 @@ export const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
   console.log('⚡ User connected:', socket.id);
+  
+  socket.on('join_global', (userId) => {
+    socket.join(`user_${userId}`);
+  });
 
   // Users join their own room for targeted notifications
   socket.on('register_user', (userId) => {
